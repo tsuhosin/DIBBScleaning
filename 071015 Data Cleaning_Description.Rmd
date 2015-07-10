@@ -1,0 +1,10 @@
+---
+title: "07/08/2015 Data Cleaning and Description"
+output: html_document
+---
+
+```{r}
+source("Jul01.R",local=TRUE)
+
+```
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

@@ -339,7 +339,7 @@ cor(dibbs1ngr[colnames(communication)]) #correlation within nonrearch group
 ##############
 ## factor analysis
 ##############
-##########
+#########
 ## know_cr
 ##########
 # Determine Number of Factors to Extract
@@ -384,24 +384,24 @@ fa.diagram(fit2)
 ## outside : There is missing value in here!===========> doesn't work
 
 # Maximum Likelihood Factor Analysis
-dgo<-dibbs1gr[c(paste("group.out",1:5,sep=""))]
-ev3 <- eigen(cor(dgo)) # get eigenvalues
-ap3 <- parallel(subject=nrow(dgo),var=ncol(dgo),
-                rep=10000,cent=.05)
-nS3 <- nScree(x=ev3$values, aparallel=ap3$eigen$qevpea)
-plotnScree(nS3)
+#dgo<-dibbs1gr[c(paste("group.out",1:5,sep=""))]
+#ev3 <- eigen(cor(dgo)) # get eigenvalues
+#ap3 <- parallel(subject=nrow(dgo),var=ncol(dgo),
+#                rep=10000,cent=.05)
+#nS3 <- nScree(x=ev3$values, aparallel=ap3$eigen$qevpea)
+#plotnScree(nS3)
 
 # Maximum Likelihood Factor Analysis
 # entering raw data and extracting 2 factors, 
 # with varimax rotation 
-fit3 <- fa(dgo, 2,n.obs=71)
-print(fit3, digits=2, cutoff=.3, sort=TRUE)
+#fit3 <- fa(dgo, 2,n.obs=71)
+#print(fit3, digits=2, cutoff=.3, sort=TRUE)
 # plot factor 1 by factor 2 
-load3 <- fit3$loadings[,1:2] 
-plot(load3,type="p",col=2) # set up plot 
-text(load3,labels=colnames(dgo),cex=.7) # add variable names
-plot(fit3)
-fa.diagram(fit3)
+#load3 <- fit3$loadings[,1:2] 
+#plot(load3,type="p",col=2) # set up plot 
+#text(load3,labels=colnames(dgo),cex=.7) # add variable names
+#plot(fit3)
+#fa.diagram(fit3)
 
 
 
