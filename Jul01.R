@@ -344,9 +344,9 @@ cor(dibbs1ngr[colnames(communication)]) #correlation within nonrearch group
 ##########
 # Determine Number of Factors to Extract
 library(nFactors)
-ev1 <- eigen(know_cr) # get eigenvalues
+ev1 <- eigen(cor(know_cr))# get eigenvalues
 ap1 <- parallel(subject=nrow(know_cr),var=ncol(know_cr),
-               rep=1000,cent=.05)
+               rep=1000,cent=.1)
 nS1 <- nScree(x=ev1$values, aparallel=ap1$eigen$qevpea)
 plotnScree(nS1)
 
@@ -363,11 +363,11 @@ fa.diagram(fit1)
 
 ## inside 
 dgi<-dibbs1gr[c(paste("group.in",1:5,sep=""))]
-ev2 <- eigen(dgi) # get eigenvalues
-ap2 <- parallel(subject=nrow(know_cr),var=ncol(know_cr),
-                rep=1000,cent=.1)
-nS2 <- nScree(x=ev1$values, aparallel=ap1$eigen$qevpea)
-plotnScree(nS1)
+ev2 <- eigen(cor(dgi)) # get eigenvalues
+ap2 <- parallel(subject=nrow(dgi),var=ncol(dgi),
+                rep=1000,cent=.05)
+nS2 <- nScree(x=ev2$values, aparallel=ap2$eigen$qevpea)
+plotnScree(nS2)
 
 # Maximum Likelihood Factor Analysis
 # entering raw data and extracting 2 factors, 
@@ -394,6 +394,23 @@ text(load2,labels=colnames(benefit),cex=.7) # add variable names
 ###########
 ## benefit
 ##########
+# Determine Number of Factors to Extract
+ev4 <- eigen(benefit) # get eigenvalues
+ap4 <- parallel(subject=nrow(benefit),var=ncol(benefit),
+                rep=1000,cent=.05)
+nS4 <- nScree(x=ev4$values, aparallel=ap4$eigen$qevpea)
+plotnScree(nS4)
+
+# Maximum Likelihood Factor Analysis
+# entering raw data and extracting 2 factors, with varimax rotation 
+fit1 <- fa(know_cr,2,n.obs=71)
+print(fit1, digits=2, cutoff=.3, sort=TRUE)
+# plot factor 1 by factor 2 
+load1 <- fit1$loadings 
+plot(fit1)
+plot(load1) # set up plot 
+text(load1,labels=colnames(know_cr),cex=.7) # add variable names
+fa.diagram(fit1)
 
 # Maximum Likelihood Factor Analysis
 # entering raw data and extracting 4 factors, 
