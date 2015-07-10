@@ -365,62 +365,90 @@ fa.diagram(fit1)
 dgi<-dibbs1gr[c(paste("group.in",1:5,sep=""))]
 ev2 <- eigen(cor(dgi)) # get eigenvalues
 ap2 <- parallel(subject=nrow(dgi),var=ncol(dgi),
-                rep=1000,cent=.05)
+                rep=10000,cent=.05)
 nS2 <- nScree(x=ev2$values, aparallel=ap2$eigen$qevpea)
 plotnScree(nS2)
 
 # Maximum Likelihood Factor Analysis
 # entering raw data and extracting 2 factors, 
 # with varimax rotation 
-fit2 <- factanal(dibbs1gr[paste("group.in",1:5,sep="")], 2, rotation="varimax")
+fit2 <- fa(dgi, 2,n.obs=71)
 print(fit2, digits=2, cutoff=.3, sort=TRUE)
 # plot factor 1 by factor 2 
 load2 <- fit2$loadings[,1:2] 
 plot(load2,type="p",col=2) # set up plot 
-text(load2,labels=colnames(benefit),cex=.7) # add variable names
+text(load2,labels=colnames(dgi),cex=.7) # add variable names
+plot(fit2)
+fa.diagram(fit2)
 
-## outside 
+## outside : There is missing value in here!===========> doesn't work
+
+# Maximum Likelihood Factor Analysis
+dgo<-dibbs1gr[c(paste("group.out",1:5,sep=""))]
+ev3 <- eigen(cor(dgo)) # get eigenvalues
+ap3 <- parallel(subject=nrow(dgo),var=ncol(dgo),
+                rep=10000,cent=.05)
+nS3 <- nScree(x=ev3$values, aparallel=ap3$eigen$qevpea)
+plotnScree(nS3)
 
 # Maximum Likelihood Factor Analysis
 # entering raw data and extracting 2 factors, 
 # with varimax rotation 
-#fit3 <- factanal(dibbs1gr[paste("group.out",1:5,sep="")], 2, rotation="varimax")
-#print(fit3, digits=2, cutoff=.3, sort=TRUE)
+fit3 <- fa(dgo, 2,n.obs=71)
+print(fit3, digits=2, cutoff=.3, sort=TRUE)
 # plot factor 1 by factor 2 
-#load3 <- fit3$loadings[,1:2] 
-#plot(load3,type="p",col=2) # set up plot 
-#text(load3,labels=colnames(benefit),cex=.7) # add variable names
+load3 <- fit3$loadings[,1:2] 
+plot(load3,type="p",col=2) # set up plot 
+text(load3,labels=colnames(dgo),cex=.7) # add variable names
+plot(fit3)
+fa.diagram(fit3)
+
+
 
 ###########
 ## benefit
 ##########
 # Determine Number of Factors to Extract
-ev4 <- eigen(benefit) # get eigenvalues
+ev4 <- eigen(cor(benefit))# get eigenvalues
 ap4 <- parallel(subject=nrow(benefit),var=ncol(benefit),
                 rep=1000,cent=.05)
 nS4 <- nScree(x=ev4$values, aparallel=ap4$eigen$qevpea)
 plotnScree(nS4)
 
-# Maximum Likelihood Factor Analysis
-# entering raw data and extracting 2 factors, with varimax rotation 
-fit1 <- fa(know_cr,2,n.obs=71)
-print(fit1, digits=2, cutoff=.3, sort=TRUE)
-# plot factor 1 by factor 2 
-load1 <- fit1$loadings 
-plot(fit1)
-plot(load1) # set up plot 
-text(load1,labels=colnames(know_cr),cex=.7) # add variable names
-fa.diagram(fit1)
 
 # Maximum Likelihood Factor Analysis
-# entering raw data and extracting 4 factors, 
+# entering raw data and extracting 2 factors, "Or", 3 factors 
 # with varimax rotation 
-fit4 <- factanal(benefit, 4, rotation="varimax")
+fit4 <- fa(benefit, 2,n.obs=71)
 print(fit4, digits=2, cutoff=.3, sort=TRUE)
 # plot factor 1 by factor 2 
 load4 <- fit4$loadings[,1:2] 
 plot(load4,type="p",col=2) # set up plot 
-text(load4,labels=colnames(benefit),cex=.7) # add variable names
+text(load4,labels=colnames(dgo),cex=.7) # add variable names
+plot(fit4)
+fa.diagram(fit4)
 
 
-safaaa
+
+###########
+## risk
+##########
+# Determine Number of Factors to Extract
+ev5 <- eigen(cor(risk))# get eigenvalues
+ap5 <- parallel(subject=nrow(risk),var=ncol(risk),
+                rep=1000,cent=.05)
+nS5 <- nScree(x=ev5$values, aparallel=ap5$eigen$qevpea)
+plotnScree(nS5)
+
+
+# Maximum Likelihood Factor Analysis
+# entering raw data and extracting 2 factors, 
+# with varimax rotation 
+fit5 <- fa(risk, 2,n.obs=71)
+print(fit5, digits=2, cutoff=.3, sort=TRUE)
+# plot factor 1 by factor 2 
+load5 <- fit5$loadings[,1:2] 
+plot(load5,type="p",col=2) # set up plot 
+text(load5,labels=colnames(dgo),cex=.7) # add variable names
+plot(fit5)
+fa.diagram(fit5)
