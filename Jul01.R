@@ -424,9 +424,10 @@ print(fit4, digits=2, cutoff=.3, sort=TRUE)
 # plot factor 1 by factor 2 
 load4 <- fit4$loadings[,1:2] 
 plot(load4,type="p",col=2) # set up plot 
-text(load4,labels=colnames(dgo),cex=.7) # add variable names
+text(load4,labels=colnames(benefit),cex=.7) # add variable names
 plot(fit4)
 fa.diagram(fit4)
+
 
 
 
@@ -449,6 +450,6 @@ print(fit5, digits=2, cutoff=.3, sort=TRUE)
 # plot factor 1 by factor 2 
 load5 <- fit5$loadings[,1:2] 
 plot(load5,type="p",col=2) # set up plot 
-text(load5,labels=colnames(dgo),cex=.7) # add variable names
+text(load5,labels=colnames(risk),cex=.7) # add variable names
 plot(fit5)
 fa.diagram(fit5)
