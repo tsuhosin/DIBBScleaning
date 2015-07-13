@@ -9,12 +9,12 @@
 
 
 #setwd("~/Google Drive/DIBBS/DIBBS")
-#setwd("~/Google Drive/02 research projects/DIBBS/DIBBS")
+setwd("~/Google Drive/02 research projects/DIBBS/DIBBS")
 #install.packages("xlsx")
 #install.packages("pastecs")
-#install.packages("prettyR")
+install.packages("prettyR")
 #install.packages("psych")
-#install.packages("data.table")
+install.packages("data.table")
 #install.packages("nFactors")
 #install.packages("MRCV")
 #install.packages("GPArotation")
@@ -453,3 +453,4 @@ plot(load5,type="p",col=2) # set up plot
 text(load5,labels=colnames(risk),cex=.7) # add variable names
 plot(fit5)
 fa.diagram(fit5)
+

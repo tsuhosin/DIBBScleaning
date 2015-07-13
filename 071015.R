@@ -6,15 +6,17 @@
 ##update 07/07/2015 : Run a factor analysis across knowledges sharing inside and outside the group, 
 #                     Rename variables according to constructs (see questions, altr, rep, learn, rel),
 #                     Run correlation for q13 and 14, individual and across, after that factor analysis (conformative: 4 factors)
-
+##update 07/08~07/10/2015 : Redefine rest of variables and simple factor analysis
+##update 07/11/2015 : Treatment for missing values which was item number "8" in each question.(randomly select from Normal(mean,var) distribution)
+#                     Factor analysis again
 
 #setwd("~/Google Drive/DIBBS/DIBBS")
-setwd("~/Google Drive/02 research projects/DIBBS/DIBBS")
+#setwd("~/Google Drive/02 research projects/DIBBS/DIBBS")
 #install.packages("xlsx")
 #install.packages("pastecs")
-install.packages("prettyR")
+#install.packages("prettyR")
 #install.packages("psych")
-install.packages("data.table")
+#install.packages("data.table")
 #install.packages("nFactors")
 #install.packages("MRCV")
 #install.packages("GPArotation")
