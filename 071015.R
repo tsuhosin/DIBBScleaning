@@ -40,6 +40,8 @@ rownames(dibbs)<-NULL
 #########################
 dibbs$Q8.1_6<-ifelse(dibbs$Q8.1_6<8,7-dibbs$Q8.1_6,dibbs$Q8.1_6)
 dibbs$Q7.1_6<-7-dibbs$Q7.1_6
+
+
 ##################################
 #create dummy variable (grouping)#
 ##################################
@@ -159,13 +161,55 @@ colnames(communication)<-ch.nm3
 head(communication)
 
 
+##########################
+# treatment of  Missing value(coded as 8)
+###########################
 
+## 07/13/15 : imputation for missing values (dataframe: know_Cr, benefit, risk)
 
+# treat 8 as missing value(NA)
+know_cr[know_cr==8]<-NA
+benefit[benefit==8]<-NA
+risk[risk==8]<-NA
+
+# impute the values to Normal(mean, var)
+know_cr1<-know_cr
+for (i in 1:dim(know_cr1)[1]){
+  for (j in 1:dim(know_cr1)[2]){
+    if (is.na(know_cr1[i,j])) {
+      know_cr1[i,j]<-rnorm(1,mean(know_cr[,j],na.rm=TRUE),sd(know_cr[,j],na.rm=TRUE))
+    }                            
+  }
+}
+know_cr1
+
+benefit1<-benefit
+for (i in 1:dim(benefit1)[1]){
+  for (j in 1:dim(benefit1)[2]){
+    if (is.na(benefit1[i,j])) {
+      benefit1[i,j]<-rnorm(1,mean(benefit[,j],na.rm=TRUE),sd(benefit[,j],na.rm=TRUE))
+    }                            
+  }
+}
+benefit1
+
+risk1<-risk
+for (i in 1:dim(risk1)[1]){
+  for (j in 1:dim(risk1)[2]){
+    if (is.na(risk1[i,j])) {
+      risk1[i,j]<-rnorm(1,mean(risk[,j],na.rm=TRUE),sd(risk[,j],na.rm=TRUE))
+    }                            
+  }
+}
+risk1
+
+#####################################
 ## combine merged variable to data ##
-dibbs1<-cbind(dibbs1, know_cr, know_shr_ng.in, know_shr_ng.out, benefit, risk, communication)
+#####################################
+
+dibbs1<-cbind(dibbs1, know_cr1, know_shr_ng.in, know_shr_ng.out, benefit1, risk1, communication)
 
 head(dibbs1)
-
 
 ########################
 # decriptive statistcis 07/05 version#
