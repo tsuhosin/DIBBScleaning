@@ -211,6 +211,7 @@ dibbs1<-cbind(dibbs1, know_cr1, know_shr_ng.in, know_shr_ng.out, benefit1, risk1
 
 head(dibbs1)
 
+
 ########################
 # decriptive statistcis 07/05 version#
 #######################
@@ -272,7 +273,7 @@ for (i in 1:length(text_var)) {
 
 #07/06/15 : Q7~Q12 define con. variables (know_cr, know_shr_ng.in, know_shr_ng.out)
 # 07/07/15 : Q13~Q14 define con. variables (benefit:dataframe)
-con_var<-c(colnames(know_cr), colnames(know_shr_ng.in), colnames(know_shr_ng.out), colnames(benefit),paste("kn_access_ng",1:5,sep=""),paste("kn_access_g_i",1:5,sep=""),paste("kn_access_g_o",1:5,sep=""), colnames(risk), colnames(communication), paste("soc_ties",1:4,sep=""), paste("tms_g",1:6,sep=""), paste("norm_g",1:8,sep=""), paste("past_protect",1:4,sep=""), 
+con_var<-c(colnames(know_cr1), colnames(know_shr_ng.in), colnames(know_shr_ng.out), colnames(benefit1),paste("kn_access_ng",1:5,sep=""),paste("kn_access_g_i",1:5,sep=""),paste("kn_access_g_o",1:5,sep=""), colnames(risk1), colnames(communication), paste("soc_ties",1:4,sep=""), paste("tms_g",1:6,sep=""), paste("norm_g",1:8,sep=""), paste("past_protect",1:4,sep=""), 
            create(skill_elec_fun, skill_elec_nanotrans, skill_elec_theory, skill_matr, skill_photo, skill_mechn, skill_bio, skill_chem, skill_comp))
 
 
@@ -326,9 +327,9 @@ dibbs1ngr<-dibbs1[group==2,]
 
 ## correlation of knowledge creation variable ##
 
-cor(dibbs1[colnames(know_cr)]) #correlation of whole observation
-cor(dibbs1rsc[colnames(know_cr)])#correlation within research group
-cor(dibbs1nrsc[colnames(know_cr)])#correlation within nonrearch group
+cor(dibbs1[colnames(know_cr1)]) #correlation of whole observation
+cor(dibbs1rsc[colnames(know_cr1)])#correlation within research group
+cor(dibbs1nrsc[colnames(know_cr1)])#correlation within nonrearch group
 
 ## correlation of knowledge sharing variable ##
 
@@ -348,9 +349,9 @@ cor(dibbs1ngr[paste("Q10.1_",c(1:4,6),sep="")],use="complete") #correlation with
 ##07/07/15
 ##correlation of benefit (altru,rel,learn,rep)
 
-cor(dibbs1[colnames(benefit)]) #correlation of whole observation 
-cor(dibbs1rsc[colnames(benefit)]) #correlation within research group
-cor(dibbs1nrsc[colnames(benefit)]) #correlation within nonrearch group
+cor(dibbs1[colnames(benefit1)]) #correlation of whole observation 
+cor(dibbs1rsc[colnames(benefit1)]) #correlation within research group
+cor(dibbs1nrsc[colnames(benefit1)]) #correlation within nonrearch group
 
 ##07/09/15
 ##correlation of kn_access ##
@@ -369,9 +370,9 @@ cor(dibbs1ngr[paste("kn_access_ng",1:5,sep="")],use="complete") #correlation wit
 
 ##correlation of risk
 
-cor(dibbs1[colnames(risk)]) #correlation of whole observation 
-cor(dibbs1rsc[colnames(risk)]) #correlation within research group
-cor(dibbs1nrsc[colnames(risk)]) #correlation within nonrearch group
+cor(dibbs1[colnames(risk1)]) #correlation of whole observation 
+cor(dibbs1rsc[colnames(risk1)]) #correlation within research group
+cor(dibbs1nrsc[colnames(risk1)]) #correlation within nonrearch group
 
 ##correlation of communication
 
@@ -390,42 +391,42 @@ cor(dibbs1ngr[colnames(communication)]) #correlation within nonrearch group
 ##########
 # Determine Number of Factors to Extract
 library(nFactors)
-ev1 <- eigen(cor(know_cr))# get eigenvalues
-ap1 <- parallel(subject=nrow(know_cr),var=ncol(know_cr),
-               rep=1000,cent=.1)
+ev1 <- eigen(cor(know_cr1))# get eigenvalues
+ap1 <- parallel(subject=nrow(know_cr1),var=ncol(know_cr1),
+               rep=1000,cent=.1, scores="Bartlett")
 nS1 <- nScree(x=ev1$values, aparallel=ap1$eigen$qevpea)
 plotnScree(nS1)
 
 # Maximum Likelihood Factor Analysis
 # entering raw data and extracting 2 factors, with varimax rotation 
-fit1 <- fa(know_cr,2,n.obs=71)
+fit1 <- fa(know_cr1,2,n.obs=71)
 print(fit1, digits=2, cutoff=.3, sort=TRUE)
 # plot factor 1 by factor 2 
 load1 <- fit1$loadings 
 plot(fit1)
 plot(load1) # set up plot 
-text(load1,labels=colnames(know_cr),cex=.7) # add variable names
+text(load1,labels=colnames(know_cr1),cex=.7) # add variable names
 fa.diagram(fit1)
 
 ## inside 
-dgi<-dibbs1gr[c(paste("group.in",1:5,sep=""))]
-ev2 <- eigen(cor(dgi)) # get eigenvalues
-ap2 <- parallel(subject=nrow(dgi),var=ncol(dgi),
+#dgi<-dibbs1gr[c(paste("group.in",1:5,sep=""))]
+#ev2 <- eigen(cor(dgi)) # get eigenvalues
+#ap2 <- parallel(subject=nrow(dgi),var=ncol(dgi),
                 rep=10000,cent=.05)
-nS2 <- nScree(x=ev2$values, aparallel=ap2$eigen$qevpea)
-plotnScree(nS2)
+#nS2 <- nScree(x=ev2$values, aparallel=ap2$eigen$qevpea)
+#plotnScree(nS2)
 
 # Maximum Likelihood Factor Analysis
 # entering raw data and extracting 2 factors, 
 # with varimax rotation 
-fit2 <- fa(dgi, 2,n.obs=71)
-print(fit2, digits=2, cutoff=.3, sort=TRUE)
+#fit2 <- fa(dgi, 2,n.obs=71)
+#print(fit2, digits=2, cutoff=.3, sort=TRUE)
 # plot factor 1 by factor 2 
-load2 <- fit2$loadings[,1:2] 
-plot(load2,type="p",col=2) # set up plot 
-text(load2,labels=colnames(dgi),cex=.7) # add variable names
-plot(fit2)
-fa.diagram(fit2)
+#load2 <- fit2$loadings[,1:2] 
+#plot(load2,type="p",col=2) # set up plot 
+#text(load2,labels=colnames(dgi),cex=.7) # add variable names
+#plot(fit2)
+#fa.diagram(fit2)
 
 ## outside : There is missing value in here!===========> doesn't work
 
@@ -455,8 +456,8 @@ fa.diagram(fit2)
 ## benefit
 ##########
 # Determine Number of Factors to Extract
-ev4 <- eigen(cor(benefit))# get eigenvalues
-ap4 <- parallel(subject=nrow(benefit),var=ncol(benefit),
+ev4 <- eigen(cor(benefit1))# get eigenvalues
+ap4 <- parallel(subject=nrow(benefit1),var=ncol(benefit),
                 rep=1000,cent=.05)
 nS4 <- nScree(x=ev4$values, aparallel=ap4$eigen$qevpea)
 plotnScree(nS4)
@@ -465,12 +466,12 @@ plotnScree(nS4)
 # Maximum Likelihood Factor Analysis
 # entering raw data and extracting 2 factors, "Or", 3 factors 
 # with varimax rotation 
-fit4 <- fa(benefit, 2,n.obs=71)
+fit4 <- fa(benefit1, 2,n.obs=71)
 print(fit4, digits=2, cutoff=.3, sort=TRUE)
 # plot factor 1 by factor 2 
 load4 <- fit4$loadings[,1:2] 
 plot(load4,type="p",col=2) # set up plot 
-text(load4,labels=colnames(benefit),cex=.7) # add variable names
+text(load4,labels=colnames(benefit1),cex=.7) # add variable names
 plot(fit4)
 fa.diagram(fit4)
 
@@ -481,8 +482,8 @@ fa.diagram(fit4)
 ## risk
 ##########
 # Determine Number of Factors to Extract
-ev5 <- eigen(cor(risk))# get eigenvalues
-ap5 <- parallel(subject=nrow(risk),var=ncol(risk),
+ev5 <- eigen(cor(risk1))# get eigenvalues
+ap5 <- parallel(subject=nrow(risk1),var=ncol(risk1),
                 rep=1000,cent=.05)
 nS5 <- nScree(x=ev5$values, aparallel=ap5$eigen$qevpea)
 plotnScree(nS5)
@@ -491,12 +492,12 @@ plotnScree(nS5)
 # Maximum Likelihood Factor Analysis
 # entering raw data and extracting 2 factors, 
 # with varimax rotation 
-fit5 <- fa(risk, 2,n.obs=71)
+fit5 <- fa(risk1, 2,n.obs=71)
 print(fit5, digits=2, cutoff=.3, sort=TRUE)
 # plot factor 1 by factor 2 
 load5 <- fit5$loadings[,1:2] 
 plot(load5,type="p",col=2) # set up plot 
-text(load5,labels=colnames(risk),cex=.7) # add variable names
+text(load5,labels=colnames(risk1),cex=.7) # add variable names
 plot(fit5)
 fa.diagram(fit5)
 
