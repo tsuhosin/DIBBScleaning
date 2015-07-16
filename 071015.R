@@ -396,16 +396,18 @@ ap1 <- parallel(subject=nrow(know_cr0),var=ncol(know_cr0),
                rep=1000,cent=.1)
 nS1 <- nScree(x=ev1$values, aparallel=ap1$eigen$qevpea)
 plotnScree(nS1)
-plot.new()
+
+dev.off()
 # Maximum Likelihood Factor Analysis
 # entering raw data and extracting 2 factors, with varimax rotation 
-fit1 <- factanal(know_cr0,2,scores="Bartlett")
+fit1 <- fa(know_cr0, 2,n.obs=71,rotate="varimax",scores="Bartlett")
 print(fit1, digits=2, cutoff=.3, sort=TRUE)
 # plot factor 1 by factor 2 
-load1 <- fit1$loadings[,1:2]
-plot(load1) # set up plot 
-text(load1,labels=names(know_cr0),cex=.7) # add variable names
-
+load1 <- fit1$loadings[,1:2] 
+plot(load1,type="p",col=2) # set up plot 
+text(load1,labels=colnames(know_cr0),cex=.7) # add variable names
+plot(fit1)
+fa.diagram(fit1)
 ## inside 
 #dgi<-dibbs1gr[c(paste("group.in",1:5,sep=""))]
 #ev2 <- eigen(cor(dgi)) # get eigenvalues
@@ -459,12 +461,12 @@ ap4 <- parallel(subject=nrow(benefit1),var=ncol(benefit),
                 rep=1000,cent=.05)
 nS4 <- nScree(x=ev4$values, aparallel=ap4$eigen$qevpea)
 plotnScree(nS4)
-
+dev.off()
 
 # Maximum Likelihood Factor Analysis
 # entering raw data and extracting 2 factors, "Or", 3 factors 
 # with varimax rotation 
-fit4 <- fa(benefit1, 2,n.obs=71)
+fit4 <- fa(benefit1, 2,n.obs=71,rotate="varimax",scores="Bartlett")
 print(fit4, digits=2, cutoff=.3, sort=TRUE)
 # plot factor 1 by factor 2 
 load4 <- fit4$loadings[,1:2] 
@@ -490,10 +492,10 @@ plotnScree(nS5)
 # Maximum Likelihood Factor Analysis
 # entering raw data and extracting 2 factors, 
 # with varimax rotation 
-fit5 <- fa(risk1, 2,n.obs=71)
+fit5 <- fa(risk1, 1,n.obs=71,rotate="varimax",scores="Bartlett")
 print(fit5, digits=2, cutoff=.3, sort=TRUE)
 # plot factor 1 by factor 2 
-load5 <- fit5$loadings[,1:2] 
+load5 <- fit5$loadings 
 plot(load5,type="p",col=2) # set up plot 
 text(load5,labels=colnames(risk1),cex=.7) # add variable names
 plot(fit5)
