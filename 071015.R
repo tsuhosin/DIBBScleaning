@@ -173,15 +173,15 @@ benefit[benefit==8]<-NA
 risk[risk==8]<-NA
 
 # impute the values to Normal(mean, var)
-know_cr1<-know_cr
-for (i in 1:dim(know_cr1)[1]){
-  for (j in 1:dim(know_cr1)[2]){
-    if (is.na(know_cr1[i,j])) {
-      know_cr1[i,j]<-rnorm(1,mean(know_cr[,j],na.rm=TRUE),sd(know_cr[,j],na.rm=TRUE))
+know_cr0<-know_cr
+for (i in 1:dim(know_cr0)[1]){
+  for (j in 1:dim(know_cr0)[2]){
+    if (is.na(know_cr0[i,j])) {
+      know_cr0[i,j]<-rnorm(1,mean(know_cr[,j],na.rm=TRUE),sd(know_cr[,j],na.rm=TRUE))
     }                            
   }
 }
-know_cr1
+know_cr0
 
 benefit1<-benefit
 for (i in 1:dim(benefit1)[1]){
@@ -207,10 +207,10 @@ risk1
 ## combine merged variable to data ##
 #####################################
 
-dibbs1<-cbind(dibbs1, know_cr1, know_shr_ng.in, know_shr_ng.out, benefit1, risk1, communication)
+dibbs1<-cbind(dibbs1, know_cr0, know_shr_ng.in, know_shr_ng.out, benefit1, risk1, communication)
 
 head(dibbs1)
-
+colnames(dibbs1)
 
 ########################
 # decriptive statistcis 07/05 version#
@@ -273,7 +273,7 @@ for (i in 1:length(text_var)) {
 
 #07/06/15 : Q7~Q12 define con. variables (know_cr, know_shr_ng.in, know_shr_ng.out)
 # 07/07/15 : Q13~Q14 define con. variables (benefit:dataframe)
-con_var<-c(colnames(know_cr1), colnames(know_shr_ng.in), colnames(know_shr_ng.out), colnames(benefit1),paste("kn_access_ng",1:5,sep=""),paste("kn_access_g_i",1:5,sep=""),paste("kn_access_g_o",1:5,sep=""), colnames(risk1), colnames(communication), paste("soc_ties",1:4,sep=""), paste("tms_g",1:6,sep=""), paste("norm_g",1:8,sep=""), paste("past_protect",1:4,sep=""), 
+con_var<-c(colnames(know_cr0), colnames(know_shr_ng.in), colnames(know_shr_ng.out), colnames(benefit1),paste("kn_access_ng",1:5,sep=""),paste("kn_access_g_i",1:5,sep=""),paste("kn_access_g_o",1:5,sep=""), colnames(risk1), colnames(communication), paste("soc_ties",1:4,sep=""), paste("tms_g",1:6,sep=""), paste("norm_g",1:8,sep=""), paste("past_protect",1:4,sep=""), 
            create(skill_elec_fun, skill_elec_nanotrans, skill_elec_theory, skill_matr, skill_photo, skill_mechn, skill_bio, skill_chem, skill_comp))
 
 
@@ -327,9 +327,9 @@ dibbs1ngr<-dibbs1[group==2,]
 
 ## correlation of knowledge creation variable ##
 
-cor(dibbs1[colnames(know_cr1)]) #correlation of whole observation
-cor(dibbs1rsc[colnames(know_cr1)])#correlation within research group
-cor(dibbs1nrsc[colnames(know_cr1)])#correlation within nonrearch group
+cor(dibbs1[colnames(know_cr0)]) #correlation of whole observation
+cor(dibbs1rsc[colnames(know_cr0)])#correlation within research group
+cor(dibbs1nrsc[colnames(know_cr0)])#correlation within nonrearch group
 
 ## correlation of knowledge sharing variable ##
 
@@ -391,28 +391,26 @@ cor(dibbs1ngr[colnames(communication)]) #correlation within nonrearch group
 ##########
 # Determine Number of Factors to Extract
 library(nFactors)
-ev1 <- eigen(cor(know_cr1))# get eigenvalues
-ap1 <- parallel(subject=nrow(know_cr1),var=ncol(know_cr1),
-               rep=1000,cent=.1, scores="Bartlett")
+ev1 <- eigen(cor(know_cr0))# get eigenvalues
+ap1 <- parallel(subject=nrow(know_cr0),var=ncol(know_cr0),
+               rep=1000,cent=.1)
 nS1 <- nScree(x=ev1$values, aparallel=ap1$eigen$qevpea)
 plotnScree(nS1)
-
+plot.new()
 # Maximum Likelihood Factor Analysis
 # entering raw data and extracting 2 factors, with varimax rotation 
-fit1 <- fa(know_cr1,2,n.obs=71)
+fit1 <- factanal(know_cr0,2,scores="Bartlett")
 print(fit1, digits=2, cutoff=.3, sort=TRUE)
 # plot factor 1 by factor 2 
-load1 <- fit1$loadings 
-plot(fit1)
+load1 <- fit1$loadings[,1:2]
 plot(load1) # set up plot 
-text(load1,labels=colnames(know_cr1),cex=.7) # add variable names
-fa.diagram(fit1)
+text(load1,labels=names(know_cr0),cex=.7) # add variable names
 
 ## inside 
 #dgi<-dibbs1gr[c(paste("group.in",1:5,sep=""))]
 #ev2 <- eigen(cor(dgi)) # get eigenvalues
 #ap2 <- parallel(subject=nrow(dgi),var=ncol(dgi),
-                rep=10000,cent=.05)
+#                rep=10000,cent=.05)
 #nS2 <- nScree(x=ev2$values, aparallel=ap2$eigen$qevpea)
 #plotnScree(nS2)
 
