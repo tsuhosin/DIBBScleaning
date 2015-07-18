@@ -32,6 +32,22 @@ create  <-function(...) paste(substitute(list(...)))[-1] # function for indexing
 
 
 dibbs0<-read.xlsx("NSF_NanoHub_0629_r1.xlsx",1,sheetName="NSF_NanoHub")
+dibbsa<-read.xlsx("NSF_NanoHub_0629_r1.xlsx",1,sheetName="Unique_IDs")
+#keep just a few variables that have a values
+dibbsa1<-dibbsa[,which(names(dibbsa) %in% c("First.Name","Status","Link","Link.Expiration","Survey.Completed"))]
+head(dibbsa1)
+#merge dibbs0 with dibbsa1
+dibbs0<-merge(dibbs0,dibbsa1,by.x="V3",by.y="First.Name",all.x=TRUE)
+
+#read user information.
+dibbs2<-read.xlsx("dump_NanoHUB_top_50tools_sim_users_DiD.xlsx",1,sheetName="dump_NanoHUB_top_sim_users_DiD")
+rownames(dibbs2)<-NULL
+head(dibbs2)
+
+##Merge the dibbs2 to dibbs0 together (Key variable=(v3,username))
+dibbs0<-merge(dibbs0,dibbs2,by.x="V3",by.y="username")
+dibbs0
+
 ### Is it OK? : drop the raw with $Q1=4 // drop the section variables
 dibbs<-dibbs0[-which(dibbs0$Q1==4),!names(dibbs0) %in% c("Q6","Q12","Q15","Q46","Q47")]
 rownames(dibbs)<-NULL
